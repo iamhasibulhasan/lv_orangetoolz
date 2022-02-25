@@ -32,6 +32,18 @@
                     name:'email'
                 },
                 {
+                    data:'status',
+                    name:'status',
+                    render:function (data, type, full, meta){
+                        return `
+                            <div class="status-toggle">
+                                <input ${data == 2 ? 'checked="checked"':''} value="${data}" type="checkbox" status_id="${full.id}" id="user_status_${full.id}" class="check user-check">
+                                <label for="user_status_${full.id}" class="checktoggle">checkbox</label>
+                            </div>
+                         `;
+                    }
+                },
+                {
                     data:'action',
                     name:'action'
                 }
@@ -153,7 +165,22 @@
                 }
             });
         });
-
+//User  status
+        $(document).on('change', 'input.user-check', function (){
+            let status_id = $(this).attr('status_id');
+            $.ajax({
+                url: '/user-status/'+ status_id,
+                success: function (data){
+                    Swal.fire({
+                        position: 'top-end',
+                        title: data,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $('#all_users_tbl').DataTable().ajax.reload();
+                }
+            });
+        });
 
 
 

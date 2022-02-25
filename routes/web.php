@@ -32,4 +32,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/user-destroy/{id}', [AdminController::class, 'destroy'])->name('user.destroy');
     Route::get('/user-edit/{id}', [AdminController::class, 'edit'])->name('user.edit');
     Route::post('/user-update', [AdminController::class, 'update'])->name('user.update');
+    Route::get('/user-status/{id}', [AdminController::class, 'statusUpdate'])->name('user.status');
+
 });

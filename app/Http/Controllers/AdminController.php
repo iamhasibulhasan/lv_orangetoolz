@@ -9,8 +9,8 @@ class AdminController extends Controller
 {
     public function index(){
         if (request()->ajax()){
-            return datatables()->of(User::where('status', '=', 2)->get())->addColumn('action', function ($data){
-                $output = '<a class="btn btn-warning btn-sm user-edit" edit-user-id="'.$data['id'].'" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+            return datatables()->of(User::where('status', '=', 2)->orWhere('status', '=', 0)->get())->addColumn('action', function ($data){
+                $output = '<a class="btn btn-primary btn-sm user-edit" edit-user-id="'.$data['id'].'" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
                 $output .= ' <a class="btn btn-danger btn-sm user-del" del-user-id="'.$data['id'].'" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
                 return $output;
             })->rawColumns(['action'])->make(true);
@@ -56,5 +56,19 @@ class AdminController extends Controller
         $edit_data->update();
         return back();
 
+    }
+
+    //    User status update
+    public function statusUpdate($id){
+        $status = User::find($id);
+        if ($status->status == 2){
+            $status->status = 0;
+            $status->update();
+            return "User has been blocked.";
+        }else{
+            $status->status = 2;
+            $status->update();
+            return "User has been unblocked.";
+        }
     }
 }
