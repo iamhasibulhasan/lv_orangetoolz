@@ -38,9 +38,7 @@
                                         @else
                                             <a type="button" class="btn btn-outline-primary" href="{{ route('login') }}">Log in</a>
 
-                                            @if (Route::has('register'))
-                                                <a type="button" class="btn btn-outline-danger" href="{{ route('register') }}">Register</a>
-                                            @endif
+
                                         @endauth
                                     </div>
                                 @endif
@@ -50,8 +48,18 @@
                     </div>
                 </div>
             </nav>
-            <div class="container">
-                <h2>Please login</h2>
+            <div class="container mt-5">
+
+                <div class="card w-50 p-4">
+                    <div class="card-title">
+                        <h3>Please login</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Admin Details</p><hr/>
+                        <p>Email: mdhasibulhasan.dev@gmail.com</p>
+                        <p>Passwor: asdfghjkl</p>
+                    </div>
+                </div>
             </div>
         </div>
 
