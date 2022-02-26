@@ -104,7 +104,12 @@
                     </div>
                     <div class="user-text">
                         <h6>{{Auth::user()->name}}</h6>
-                        <p class="text-muted mb-0">Administrator</p>
+                        @if(Auth::user()->status == 1)
+                            <p class="text-muted mb-0">Administrator</p>
+                        @else
+                            <p class="text-muted mb-0">User</p>
+                        @endif
+
                     </div>
                 </div>
                 <a class="dropdown-item" href="{{route('profile.show')}}">My Profile</a>

@@ -182,8 +182,82 @@
             });
         });
 
+    //    Upload Files
+        $(document).on('submit', '#upload_file_form', function (e){
+            e.preventDefault();
+            $.ajax({
+                url:'/dashboard/storefile',
+                method: 'POST',
+                data : new FormData(this),
+                contentType:false,
+                processData: false,
+                success: function (data){
+                    // alert(data);
+                    alertMsg('File updated successful !', 'success');
+                    // $('#all_users_tbl').DataTable().ajax.reload();
+                    $("#upload_file_form")[0].reset();
+                }
+            });
+        });
+
+        $('#all_files_tbl').DataTable({
+            processing:true,
+            serverSide:true,
+            ajax: {
+                url: '/dashboard/allfiles'
+            },
+            columns:[
+                {
+                    data:'id',
+                    name:'id'
+                },
+                {
+                    data:'name',
+                    name:'name'
+                },
+                {
+                    data:'file',
+                    name:'file'
+                },
+                {
+                    data:'action',
+                    name:'action'
+                }
+            ]
+        });
+
+        $(document).on('click', '.file-group', function (e){
+            e.preventDefault();
+            let id = $(this).attr('file-id');
+            $.ajax({
+                url: '/dashboard/group/'+ id,
+                success: function (data){
+                    // console.log(data[0]);
+                    $('#g1_name').html(data[2]);
+                    $('#g1_count').html(data[0]);
+                    $('#g2_name').html(data[3]);
+                    $('#g2_count').html(data[1]);
+                    $('#new_group').modal('show');
+                    $('#group1').attr('group_name', data[2]);
+                    $('#group2').attr('group_name', data[3]);
+                }
+            });
+            // $('#new_group').modal('show');
+        });
 
 
+        $(document).on('click', '.group',function (e){
+            e.preventDefault();
+            let name = $(this).attr('group_name');
+            $.ajax({
+                url: '/dashboard/group-view/'+ name,
+                success: function (data){
+                    window.location.href = "group-view/"+name;
+
+                }
+            });
+        });
+        $('#group_view').DataTable();
 
 
     //    ! Code Ends Here

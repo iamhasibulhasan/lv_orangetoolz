@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -23,7 +24,7 @@ class AdminController extends Controller
         User::create([
             'name'      =>  $request->uname,
             'email'     =>  $request->uemail,
-            'password'  =>  md5($request->upass),
+            'password'  =>  Hash::make($request->upass),
             'status'    =>  2
         ]);
         return back();
